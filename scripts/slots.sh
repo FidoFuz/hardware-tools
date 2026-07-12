@@ -2,7 +2,7 @@
 set -euo pipefail
 
 tmp=$(mktemp)
-lspci -Dnn > "$tmp"
+lspci -Dnn | sed G > "$tmp"
 
 echo "========================================"
 echo "PCIe Slots"
