@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>hardware-tools</Name>
+  <Repository>ghcr.io/fidofuz/hardware-tools:main</Repository>
+  <Registry>https://ghcr.io</Registry>
+  <Network>host</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>true</Privileged>
+  <Support>https://github.com/FidoFuz/hardware-tools</Support>
+  <Project>https://github.com/FidoFuz/hardware-tools</Project>
+  <Overview>Portable hardware diagnostics and inventory toolkit.</Overview>
+  <Category>Tools:</Category>
+  <WebUI/>
+  <Icon>https://raw.githubusercontent.com/FidoFuz/hardware-tools/main/docs/icon.png</Icon>
+
+  <Config Name="Host Root" Target="/host" Default="/" Mode="ro" Type="Path" Display="always" Required="true" Mask="false"/>
+  <Config Name="Host /dev" Target="/dev" Default="/dev" Mode="rw" Type="Path" Display="always" Required="true" Mask="false"/>
+  <Config Name="Host /sys" Target="/sys" Default="/sys" Mode="ro" Type="Path" Display="always" Required="true" Mask="false"/>
+</Container>
