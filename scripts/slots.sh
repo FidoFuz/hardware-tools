@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+tmp=$(mktemp)
+lspci -Dnn > "$tmp"
+
 echo "========================================"
 echo "PCIe Slots"
 echo "========================================"
 
-dmidecode -t slot 2>/dev/null | awk '
+dmidecode -t slot 2>/dev/null | awk -v pci="$tmp" '
 BEGIN {
     RS=""
     FS="\n"
@@ -35,5 +38,24 @@ BEGIN {
         }
     }
 
-    printf "%-35s %-10s %s\n", designation, usage, bus
-}'
+    printf "%s\n", designation
+    printf "  Status : %s\n", usage
+
+    if (bus != "") {
+        printf "  Bus    : %s\n", bus
+
+        while ((getline dev < pci) > 0) {
+            if (index(dev, bus) == 1) {
+                sub(/^[^ ]+ /, "", dev)
+                printf "  Device : %s\n", dev
+                break
+            }
+        }
+        close(pci)
+    }
+
+    print ""
+}
+'
+
+rm -f "$tmp"
