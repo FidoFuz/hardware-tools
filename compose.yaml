@@ -1,13 +1,9 @@
 services:
   hardware-tools:
-    build: .
     container_name: hardware-tools
-    network_mode: host
-    restart: unless-stopped
-    tty: true
-    stdin_open: true
-    privileged: true
-    volumes:
-      - /:/host:ro
-      - /dev:/dev
-      - /sys:/sys:ro
+    build:
+      context: .
+      args:
+        GIT_COMMIT: ${GIT_COMMIT:-unknown}
+        BUILD_DATE: ${BUILD_DATE:-unknown}
+        IMAGE_NAME: hardware-tools
