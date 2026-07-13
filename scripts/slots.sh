@@ -18,6 +18,8 @@ BEGIN {
     designation=""
     usage=""
     bus=""
+    type=""
+    width=""
 
     for (i = 1; i <= NF; i++) {
         line=$i
@@ -36,10 +38,22 @@ BEGIN {
             sub(/.*Bus Address:[ \t]*/, "", line)
             bus=line
         }
+
+        if (line ~ /Type:/) {
+            sub(/.*Type:[ \t]*/, "", line)
+            type=line
+        }
+
+        if (line ~ /Data Bus Width:/) {
+            sub(/.*Data Bus Width:[ \t]*/, "", line)
+            width=line
+        }
     }
 
     printf "%s\n", designation
     printf "  Status : %s\n", usage
+    printf "  Type   : %s\n", type
+    printf "  Width  : %s\n", width
 
     if (bus != "") {
         printf "  Bus    : %s\n", bus
